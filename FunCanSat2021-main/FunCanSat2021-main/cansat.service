@@ -1,0 +1,13 @@
+[Unit]
+Description=Cansat service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/pi/FunCanSat2021/
+ExecStart=/usr/bin/python3 main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
