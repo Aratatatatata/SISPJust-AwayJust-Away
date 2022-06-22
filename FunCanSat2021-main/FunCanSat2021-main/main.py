@@ -9,11 +9,12 @@ import sys
 from util.GPS import GPS
 from util.LSM9DS1 import simple
 from util.Controller import Controller
-
+#from util.csvWriter import  csvWriter
 def main():
     
     con = Controller.Controller()
     my_csv = MakeCSV()
+    #my_csv = csvWriter.csvWriter('','')
     
     time.sleep(0.2)
     lsm = simple.LSM9DS1()
