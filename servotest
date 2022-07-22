@@ -1,0 +1,45 @@
+#!/usr/bin/python
+# coding: utf-8 
+
+import RPi.GPIO as GPIO
+import time
+import sys 
+
+# GPIO 16番を使用
+PIN = 16
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(PIN, GPIO.OUT)
+servo = GPIO.PWM(PIN, 50)       # GPIO.PWM(PIN, [周波数(Hz)])
+
+# duty = [0.5~2.4(ms)/20(ms)*100]	[デューティー比＝パルス幅/周期]
+duty = [2.5,3.6875,4.875,6.0625,7.25,8.4375,9.625,10.8125,12]
+
+if __name__ == '__main__':
+        try:
+                servo.start(0.0)
+
+                servo.ChangeDutyCycle(duty[3])
+                time.sleep(1.0)
+                servo.ChangeDutyCycle(duty[5])
+                time.sleep(1.0)
+                servo.ChangeDutyCycle(duty[3])
+                time.sleep(1.0)
+
+                while True:
+                        for i, dutycycle in enumerate(duty):
+                                servo.ChangeDutyCycle(dutycycle)
+                                print("Angle:" + str(i*22.5)+"  duty = %.4f" % dutycycle) 
+                                time.sleep(1.0)
+                        for i, dutycycle in enumerate( reversed(duty) ):
+                                servo.ChangeDutyCycle(dutycycle)
+                                print("Angle:" + str(180 - i*22.5)+"  duty = %.4f" % dutycycle) 
+                                time.sleep(1.0)
+
+        except KeyboardInterrupt:
+                pass
+
+servo.ChangeDutyCycle(duty[4])
+time.sleep(1.5)
+servo.stop()
+GPIO.cleanup()
