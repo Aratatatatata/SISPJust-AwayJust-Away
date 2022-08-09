@@ -25,5 +25,5 @@ if __name__ == '__main__':
      while True:
        x = Gps.latitude[0]
        y = Gps.longitude[0]
-       print('緯度経度: %2.8f, %2.8f' % (gps.latitude[0], gps.longitude[0]))
+       print('緯度経度: %2.8f, %2.8f' % (x, y))
        time.sleep(3.0)
