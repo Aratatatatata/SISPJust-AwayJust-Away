@@ -22,6 +22,8 @@ class GPS(threading.Thread):
 if __name__ == '__main__':
      Gps = GPS.GPS()
      Gps.start()
-     x = Gps.latitude[0]
-     y = Gps.longitude[0]
-     print('緯度経度: %2.8f, %2.8f' % (gps.latitude[0], gps.longitude[0]))
+     while True:
+       x = Gps.latitude[0]
+       y = Gps.longitude[0]
+       print('緯度経度: %2.8f, %2.8f' % (gps.latitude[0], gps.longitude[0]))
+       time.sleep(3.0)
