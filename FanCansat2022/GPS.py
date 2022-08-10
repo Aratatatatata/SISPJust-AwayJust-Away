@@ -23,7 +23,10 @@ if __name__ == '__main__':
      Gps = GPS.GPS()
      Gps.start()
      while True:
-       x = Gps.latitude[0]
-       y = Gps.longitude[0]
-       print('緯度経度: %2.8f, %2.8f' % (x, y))
-       time.sleep(3.0)
+          if gps.clean_sentences > 20: # ちゃんとしたデーターがある程度たまったら出力する
+             h = Gps.timestamp[0] if Gps.timestamp[0] < 24 else gps.timestamp[0] - 24
+             print('%2d:%02d:%04.1f' % (h, Gps.timestamp[1], Gps.timestamp[2]))
+             x = Gps.latitude[0]
+             y = Gps.longitude[0]
+             print('緯度経度: %2.8f, %2.8f' % (x, y))
+             time.sleep(3.0)
