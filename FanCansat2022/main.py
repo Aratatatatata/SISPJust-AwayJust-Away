@@ -72,8 +72,6 @@ while True:
         if(i > 60):
             break
 
-    while True:
-        pass
 
     sys.exit()
 
