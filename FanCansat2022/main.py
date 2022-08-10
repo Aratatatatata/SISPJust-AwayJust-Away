@@ -55,7 +55,8 @@ while True:
         let = con.dis_gps(old_x, old_y, gps_x, gps_y, dir_x, dir_y)
         my_csv.write([data['date'][0],data['date'][1],data['date'][2],data['timestamp'][0],data['timestamp'][1],data['timestamp'][2],data['latitude'][0],data['latitude'][1],data['longitude'][0],data['longitude'][1],
             acc_x,acc_y,acc_z,LR,let])
-        
+        if let>0:
+              
        old_x, old_y = gps_x, gps_y
         time.sleep(0.5)
         i += 1
