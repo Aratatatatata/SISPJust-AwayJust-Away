@@ -5,6 +5,8 @@ import math
 
 class Controller():
     def __init__(self):
+          
+    
     
     #最も近いゴール座標を返す。
     def set_goal(self, gps_x, gps_y):
