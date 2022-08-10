@@ -72,9 +72,10 @@ while True:
         if(i > 60):
             break
 
-
+    del l_servo
+    del r_servo
     sys.exit()
-
+    
 
 if __name__ == '__main__':
     main()
