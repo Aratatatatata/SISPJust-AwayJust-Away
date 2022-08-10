@@ -6,9 +6,10 @@ import os
 import math
 import sys
 
-from util.GPS import GPS
-from util.LSM9DS1 import simple
-from util.Controller import Controller
+from . import GPS
+from . import sarvo
+from . import Controller
+from . import 
 
 def main():
     
