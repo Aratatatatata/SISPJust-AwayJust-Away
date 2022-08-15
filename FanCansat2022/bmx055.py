@@ -3,14 +3,15 @@ import time
 import math
 
 # I2C
-ACCL_ADDR = 0x19
-ACCL_R_ADDR = 0x02
-GYRO_ADDR = 0x69
-GYRO_R_ADDR = 0x02
-MAG_ADDR = 0x13
-MAG_R_ADDR = 0x42
-i2c = SMBus(1)
-def bmx_setup():
+class bmx055:
+  def __init__(self):
+    ACCL_ADDR = 0x19
+    ACCL_R_ADDR = 0x02
+    GYRO_ADDR = 0x69
+    GYRO_R_ADDR = 0x02
+    MAG_ADDR = 0x13
+    MAG_R_ADDR = 0x42
+    i2c = SMBus(1)
     # acc_data_setup : 加速度の値をセットアップ
     i2c.write_byte_data(ACCL_ADDR, 0x0F, 0x03)
     i2c.write_byte_data(ACCL_ADDR, 0x10, 0x08)
@@ -32,7 +33,7 @@ def bmx_setup():
     i2c.write_byte_data(MAG_ADDR, 0x51, 0x04)
     i2c.write_byte_data(MAG_ADDR, 0x52, 0x16)
     time.sleep(0.5)
-def acc_value():
+  def acc_value():
     data = [0, 0, 0, 0, 0, 0]
     acc_data = [0.0, 0.0, 0.0]
     try:
@@ -46,7 +47,7 @@ def acc_value():
     except IOError as e:
         print("I/O error({0}): {1}".format(e.errno, e.strerror))
     return acc_data
-def gyro_value():
+  def gyro_value():
     data = [0, 0, 0, 0, 0, 0]
     gyro_data = [0.0, 0.0, 0.0]
     try:
@@ -60,7 +61,7 @@ def gyro_value():
     except IOError as e:
         print("I/O error({0}): {1}".format(e.errno, e.strerror))
     return gyro_data
-def mag_value():
+  def mag_value():
     data = [0, 0, 0, 0, 0, 0, 0, 0]
     mag_data = [0.0, 0.0, 0.0]
     try:
@@ -79,13 +80,13 @@ def mag_value():
         print("I/O error({0}): {1}".format(e.errno, e.strerror))
     return mag_data
 if __name__ == "__main__":
-    bmx_setup()
+    bmx = bmxo55.bmx055()
     time.sleep(0.1)
 
     while True:
-        acc = acc_value()
-        gyro= gyro_value()
-        mag = mag_value()
+        acc = bmx.acc_value()
+        gyro= bmx.gyro_value()
+        mag = bmx.mag_value()
         print("Accl -> x:{}, y:{}, z: {}".format(acc[0], acc[1], acc[2]))
         print("Gyro -> x:{}, y:{}, z: {}".format(gyro[0], gyro[1], gyro[2]))
         print("Mag -> x:{}, y:{}, z: {}".format(mag[0], mag[1], mag[2]))
