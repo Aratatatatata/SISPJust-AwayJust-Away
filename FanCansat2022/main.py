@@ -10,24 +10,25 @@ from . import GPS
 from . import sarvo
 from . import Controller
 from . import csvWriter
-#csvwiterがインポートされてない
+from . import bmx055
 def main():
     
 #インスタンスの作成
 
     con = Controller.Controller()
-    my_csv = MakeCSV()#まちがってる
+    my_csv = csvWriter.csvWriter()
     gps = GPS.GPS()
+    bmx = bmx055.bmx055()
     gps.start()
     count = 0
 
 #落下検知
 　while True:
-          acc_x, acc_y, acc_z = lsm.read_acc() #加速度の取得
-#GPSのデータをcsvに出力する.gps.data, gps.timestamp, gps.latitude, gps.longitudeを使用(検証する)
-my_csv.write([gps.timestamp[0],gps.timestamp[1],gps.timestamp[2],gps.latitude[0],gps.longitude[0],acc_x,acc_y,acc_z,0,0])  
+    acc = bmx.acc_value() #加速度の取得
+    #GPSのデータをcsvに出力する.gps.data, gps.timestamp, gps.latitude, gps.longitudeを使用(検証する)
+    my_csv.write([gps.timestamp[0],gps.timestamp[1],gps.timestamp[2],gps.latitude[0],gps.longitude[0],acc_x,acc_y,acc_z,0,0])  
      
-　 if(-5000 < acc_z and acc_z < 5000):＃全部の値が規定値以下になれば開始
+　  if(-50 < acc[0] and acc[0] < 50    and    -50 < acc[1] and acc[1] < 50    and    -50 < acc[2] and acc[2] < 50):#全部の値が規定値以下になれば開始
             count += 1
         else:
             count = 0
@@ -38,16 +39,16 @@ my_csv.write([gps.timestamp[0],gps.timestamp[1],gps.timestamp[2],gps.latitude[0]
 
 #制御開始
 
-    gps_x = gps.longitude[0]
-    gps_y = gps.latitude[0]
+  gps_x = gps.longitude[0]
+  gps_y = gps.latitude[0]
 
-    acc_x, acc_y, acc_z = lsm.read_acc()
-    my_csv.write([gps.timestamp[0],gps.timestamp[1],gps.timestamp[2],gps.latitude[0],gps.longitude[0],acc_x,acc_y,acc_z,0,0])
-    old_x, old_y = gps_x, gps_y
-    i = 0
+  acc = bmx.acc_value()
+  my_csv.write([gps.timestamp[0],gps.timestamp[1],gps.timestamp[2],gps.latitude[0],gps.longitude[0],acc[0],acc[1],acc[2],0,0])
+  old_x, old_y = gps_x, gps_y
+  i = 0
 
     
-while True:
+  while True:
         gps_x = gps.longitude[0]
         gps_y = gps.latitude[0]
         
@@ -72,9 +73,9 @@ while True:
         if(i > 60):
             break
 
-    del l_servo
-    del r_servo
-    sys.exit()
+  del l_servo
+  del r_servo
+  sys.exit()
     
 
 if __name__ == '__main__':
