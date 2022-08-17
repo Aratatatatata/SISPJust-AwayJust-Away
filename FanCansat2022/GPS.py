@@ -5,13 +5,13 @@ import time
 
 class GPS(threading.Thread): 
   def __init__(self): 
-      super(myThread, self).__init__()
+      super(GPS, self).__init__()
       self.gps = micropyGPS.MicropyGPS(9, 'dd') # MicroGPSオブジェクトを生成する。
                                      # 引数はタイムゾーンの時差と出力フォーマット
 
   def run(self):#使うときはrun()じゃなくてstart()
-      self.s = serial.Serial('/dev/serial0', 9600, timeout=10)
-      self.s.readline() # 最初の1行は中途半端なデーターが読めることがあるので、捨てる
+      s = serial.Serial('/dev/serial0', 9600, timeout=10)
+      s.readline() # 最初の1行は中途半端なデーターが読めることがあるので、捨てる
       while True:
           sentence = s.readline().decode('utf-8') # GPSデーターを読み、文字列に変換する
           if sentence[0] != '$': # 先頭が'$'でなければ捨てる
@@ -20,13 +20,13 @@ class GPS(threading.Thread):
               gps.update(x)
                
 if __name__ == '__main__':
-     Gps = GPS.GPS()
+     Gps = GPS()
      Gps.start()
      while True:
           if gps.clean_sentences > 20: # ちゃんとしたデーターがある程度たまったら出力する
-             h = Gps.timestamp[0] if Gps.timestamp[0] < 24 else gps.timestamp[0] - 24
-             print('%2d:%02d:%04.1f' % (h, Gps.timestamp[1], Gps.timestamp[2]))
-             x = Gps.latitude[0]
-             y = Gps.longitude[0]
+             h = Gps.gps.timestamp[0] if Gps.gps.timestamp[0] < 24 else Gps..gpstimestamp[0] - 24
+             print('%2d:%02d:%04.1f' % (h, Gps.gps.timestamp[1], Gps.gps.timestamp[2]))
+             x = Gps.gps.latitude[0]
+             y = Gps.gps.longitude[0]
              print('緯度経度: %2.8f, %2.8f' % (x, y))
              time.sleep(3.0)
