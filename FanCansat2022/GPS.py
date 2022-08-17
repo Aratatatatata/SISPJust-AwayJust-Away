@@ -23,8 +23,8 @@ if __name__ == '__main__':
      Gps = GPS()
      Gps.start()
      while True:
-          if gps.clean_sentences > 20: # ちゃんとしたデーターがある程度たまったら出力する
-             h = Gps.gps.timestamp[0] if Gps.gps.timestamp[0] < 24 else Gps..gpstimestamp[0] - 24
+          if Gps.gps.clean_sentences > 20: # ちゃんとしたデーターがある程度たまったら出力する
+             h = Gps.gps.timestamp[0] if Gps.gps.timestamp[0] < 24 else Gps.gps.gpstimestamp[0] - 24
              print('%2d:%02d:%04.1f' % (h, Gps.gps.timestamp[1], Gps.gps.timestamp[2]))
              x = Gps.gps.latitude[0]
              y = Gps.gps.longitude[0]
