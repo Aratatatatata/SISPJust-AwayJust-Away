@@ -6,11 +6,11 @@ import os
 import math
 import sys
 
-from . import GPS
-from . import sarvo
-from . import Controller
-from . import csvWriter
-from . import bmx055
+import GPS
+import servo
+import Controller
+import csvWriter
+import bmx055
 def main():
     
 #インスタンスの作成
